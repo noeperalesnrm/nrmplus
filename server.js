@@ -5,7 +5,7 @@ const cors = require("cors");
 const app = express();
 
 var corsOptions = {
-  origin: "http://localhost:8081"
+  origin: "*"
 };
 
 app.use(cors(corsOptions));
@@ -29,6 +29,12 @@ app.get("/", (req, res) => {
 });
 
 require("./app/routes/turorial.routes")(app);
+require("./app/routes/device.routes")(app);
+require("./app/routes/user.routes")(app);
+require("./app/routes/form.routes")(app);
+require("./app/routes/question.routes")(app);
+require("./app/routes/answer.routes")(app);
+require("./app/routes/user_answer.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
