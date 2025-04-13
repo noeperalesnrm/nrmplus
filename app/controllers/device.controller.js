@@ -92,14 +92,45 @@ exports.findAll = (req, res) => {
     });
 };
 
+const isQueryParam = async (param) => {
+  if(param && param != undefined && param != '') {
+    return true;
+  }
+  return false;
+}
 // Retrieve all Device from the database.
 exports.findAllPaginated = (req, res) => {
-
   
   const id = req.query.id_like;
   const email = req.query.email_like;
   const ip = req.query.ip_like;
   const isp = req.query.isp_like;
+
+  const filter = { id, email, ip, isp };
+
+  let searchStr = {};
+
+  if(isQueryParam(id_like)) {
+    searchStr.id = {
+     [Op.like]: `%${id}%`
+    }
+  }
+  if(isQueryParam(email_like)) {
+    searchStr.email = {
+     [Op.like]: `%${email}%`
+    }
+  }
+  if(isQueryParam(ip_like)) {
+    searchStr.ip = {
+     [Op.like]: `%${ip}%`
+    }
+  }
+  if(isQueryParam(isp_like)) {
+    searchStr.isp = {
+     [Op.like]: `%${isp}%`
+    }
+  }
+
 
   var condition1 = id ? { id: { [Op.iLike]: `%${id}%` } } : null;
   var condition2 = email ? { email: { [Op.iLike]: `%${email}%` } } : null;
@@ -110,7 +141,7 @@ exports.findAllPaginated = (req, res) => {
   const limit = req.query.limit ? req.query.limit : null;
 
   //Device.findAll({ offset: offset, limit: limit })
-  const { count, rows } = Device.findAndCountAll({ where: { $or: [ condition1, condition2, condition3, condition4 ] }, offset: offset, limit: limit })
+  const { count, rows } = Device.findAndCountAll({ where: searchStr, offset: offset, limit: limit })
     .then(rows => {
       res.header('Access-Control-Expose-Headers', 'X-Total-Count');
       res.header('X-Total-Count', count);
