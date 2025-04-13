@@ -110,22 +110,22 @@ exports.findAllPaginated = (req, res) => {
 
   let searchStr = {};
 
-  if(isQueryParam(id_like)) {
+  if(id) {
     searchStr.id = {
      [Op.like]: `%${id}%`
     }
   }
-  if(isQueryParam(email_like)) {
+  if(email) {
     searchStr.email = {
      [Op.like]: `%${email}%`
     }
   }
-  if(isQueryParam(ip_like)) {
+  if(ip) {
     searchStr.ip = {
      [Op.like]: `%${ip}%`
     }
   }
-  if(isQueryParam(isp_like)) {
+  if(isp) {
     searchStr.isp = {
      [Op.like]: `%${isp}%`
     }
