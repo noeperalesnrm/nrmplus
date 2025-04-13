@@ -80,12 +80,31 @@ exports.findAll = (req, res) => {
 
   Device.findAll({ where: condition })
     .then(data => {
+      res.header('Access-Control-Expose-Headers', 'X-Total-Count')
+      res.header('X-Total-Count', data.length)  
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
           err.message || "Some error occurred while retrieving devices."
+      });
+    });
+};
+
+// Retrieve all Device from the database.
+exports.findAllPaginated = (req, res) => {
+  const offset = req.query.offset;
+  const limit = req.query.limit;
+
+  Device.findAll({ offset: offset, limit: limit })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving paginated devices."
       });
     });
 };

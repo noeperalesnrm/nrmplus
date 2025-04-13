@@ -9,6 +9,9 @@ module.exports = app => {
   // Retrieve all Tutorials
   router.get("/", devices.findAll);
 
+  // Retrieve all Tutorials paginated
+  router.get("/pag", devices.findAllPaginated);
+
   // Retrieve all published Tutorials
   router.get("/nfc", devices.findAllNFC);
 
