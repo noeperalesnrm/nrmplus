@@ -110,7 +110,7 @@ exports.findAllPaginated = (req, res) => {
   const limit = req.query.limit ? req.query.limit : null;
 
   //Device.findAll({ offset: offset, limit: limit })
-  const { count, rows } = Device.findAndCountAll({ where: [ condition1, condition2, condition3, condition4 ], offset: offset, limit: limit })
+  const { count, rows } = Device.findAndCountAll({ where: { $or: [ condition1, condition2, condition3, condition4 ] }, offset: offset, limit: limit })
     .then(rows => {
       res.header('Access-Control-Expose-Headers', 'X-Total-Count');
       res.header('X-Total-Count', count);
