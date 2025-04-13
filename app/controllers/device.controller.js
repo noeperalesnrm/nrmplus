@@ -100,7 +100,7 @@ exports.findAllPaginated = (req, res) => {
   Device.findAll({ offset: offset, limit: limit })
     .then(data => {
       res.header('Access-Control-Expose-Headers', 'X-Total-Count');
-      res.header('X-Total-Count', data.length);
+      res.header('X-Total-Count', data.length*100);
       res.send(data);
     })
     .catch(err => {
