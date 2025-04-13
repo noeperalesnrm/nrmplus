@@ -94,7 +94,7 @@ exports.findAll = (req, res) => {
 
 // Retrieve all Device from the database.
 exports.findAllPaginated = (req, res) => {
-  const offset = req.query.offset ? req.query.offset : null;
+  const offset = req.query.offset ? (req.query.offset-1)*10 : null;
   const limit = req.query.limit ? req.query.limit : null;
 
   Device.findAll({ offset: offset, limit: limit })
