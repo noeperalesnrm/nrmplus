@@ -94,13 +94,23 @@ exports.findAll = (req, res) => {
 
 // Retrieve all Device from the database.
 exports.findAllPaginated = (req, res) => {
+
+  
+  const id = req.query.id_like;
   const email = req.query.email_like;
-  var condition = email ? { email: { [Op.iLike]: `%${email}%` } } : null;
+  const ip = req.query.ip_like;
+  const isp = req.query.isp_like;
+
+  var condition1 = id ? { id: { [Op.iLike]: `%${id}%` } } : null;
+  var condition2 = email ? { email: { [Op.iLike]: `%${email}%` } } : null;
+  var condition3 = ip ? { ip: { [Op.iLike]: `%${ip}%` } } : null;
+  var condition4 = isp ? { isp: { [Op.iLike]: `%${isp}%` } } : null;
+
   const offset = req.query.offset ? (req.query.offset-1)*10 : null;
   const limit = req.query.limit ? req.query.limit : null;
 
   //Device.findAll({ offset: offset, limit: limit })
-  const { count, rows } = Device.findAndCountAll({ where: condition, offset: offset, limit: limit })
+  const { count, rows } = Device.findAndCountAll({ where: [ condition1, condition2, condition3, condition4 ], offset: offset, limit: limit })
     .then(rows => {
       res.header('Access-Control-Expose-Headers', 'X-Total-Count');
       res.header('X-Total-Count', count);
