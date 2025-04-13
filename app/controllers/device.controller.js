@@ -75,7 +75,7 @@ exports.create = (req, res) => {
 
 // Retrieve all Device from the database.
 exports.findAll = (req, res) => {
-  const email = req.query.email;
+  const email = req.query.email_like;
   var condition = email ? { email: { [Op.iLike]: `%${email}%` } } : null;
 
   Device.findAll({ where: condition })
@@ -94,11 +94,13 @@ exports.findAll = (req, res) => {
 
 // Retrieve all Device from the database.
 exports.findAllPaginated = (req, res) => {
+  const email = req.query.email_like;
+  var condition = email ? { email: { [Op.iLike]: `%${email}%` } } : null;
   const offset = req.query.offset ? (req.query.offset-1)*10 : null;
   const limit = req.query.limit ? req.query.limit : null;
 
   //Device.findAll({ offset: offset, limit: limit })
-  const { count, rows } = Device.findAndCountAll({ offset: offset, limit: limit })
+  const { count, rows } = Device.findAndCountAll({ where: condition, offset: offset, limit: limit })
     .then(rows => {
       res.header('Access-Control-Expose-Headers', 'X-Total-Count');
       res.header('X-Total-Count', count);
