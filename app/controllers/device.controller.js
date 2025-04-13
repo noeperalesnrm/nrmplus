@@ -80,8 +80,8 @@ exports.findAll = (req, res) => {
 
   Device.findAll({ where: condition })
     .then(data => {
-      res.header('Access-Control-Expose-Headers', 'X-Total-Count')
-      res.header('X-Total-Count', data.length)  
+      res.header('Access-Control-Expose-Headers', 'X-Total-Count');
+      res.header('X-Total-Count', data.length);
       res.send(data);
     })
     .catch(err => {
@@ -94,11 +94,13 @@ exports.findAll = (req, res) => {
 
 // Retrieve all Device from the database.
 exports.findAllPaginated = (req, res) => {
-  const offset = req.query.offset;
-  const limit = req.query.limit;
+  const offset = req.query.offset ? req.query.offset : null;
+  const limit = req.query.limit ? req.query.limit : null;
 
   Device.findAll({ offset: offset, limit: limit })
     .then(data => {
+      res.header('Access-Control-Expose-Headers', 'X-Total-Count');
+      res.header('X-Total-Count', data.length);
       res.send(data);
     })
     .catch(err => {

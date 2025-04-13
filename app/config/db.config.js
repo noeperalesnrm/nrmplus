@@ -1,6 +1,6 @@
 module.exports = {
-  //HOST: "34.58.102.219",
-  HOST: "localhost",
+  //HOST: "34.58.102.219", //* Para local
+  HOST: "localhost", //* Para servidor en GCP
   USER: "postgres",
   PASSWORD: "7e}$P+2})c]l",
   DB: "postgres",
