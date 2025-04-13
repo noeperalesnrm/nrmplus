@@ -99,10 +99,10 @@ exports.findAllPaginated = (req, res) => {
 
   //Device.findAll({ offset: offset, limit: limit })
   const { count, rows } = Device.findAndCountAll({ offset: offset, limit: limit })
-    .then(data => {
+    .then(rows => {
       res.header('Access-Control-Expose-Headers', 'X-Total-Count');
       res.header('X-Total-Count', count);
-      res.send(data);
+      res.send(rows);
     })
     .catch(err => {
       res.status(500).send({
