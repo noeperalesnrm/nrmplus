@@ -106,7 +106,10 @@ exports.findAllPaginated = (req, res) => {
   const ip = req.query.ip_like;
   const isp = req.query.isp_like;
 
-  const filter = { id, email, ip, isp };
+  const sortField = req.query._sort;
+  const orderSort = req.query._order;
+
+  //const filter = { id, email, ip, isp };
 
   let searchStr = {};
 
@@ -131,17 +134,11 @@ exports.findAllPaginated = (req, res) => {
     }
   }
 
-
-  var condition1 = id ? { id: { [Op.iLike]: `%${id}%` } } : null;
-  var condition2 = email ? { email: { [Op.iLike]: `%${email}%` } } : null;
-  var condition3 = ip ? { ip: { [Op.iLike]: `%${ip}%` } } : null;
-  var condition4 = isp ? { isp: { [Op.iLike]: `%${isp}%` } } : null;
-
   const offset = req.query.offset ? (req.query.offset-1)*10 : null;
   const limit = req.query.limit ? req.query.limit : null;
 
   //Device.findAll({ offset: offset, limit: limit })
-  const { count, rows } = Device.findAndCountAll({ where: searchStr, offset: offset, limit: limit })
+  const { count, rows } = Device.findAndCountAll({ where: searchStr, offset: offset, limit: limit, order:[ [ sortField, orderSort ] ] })
     .then(rows => {
       res.header('Access-Control-Expose-Headers', 'X-Total-Count');
       res.header('X-Total-Count', count);
