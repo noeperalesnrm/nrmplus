@@ -106,8 +106,8 @@ exports.findAllPaginated = (req, res) => {
   const ip = req.query.ip_like;
   const isp = req.query.isp_like;
 
-  const sortField = req.query._sort;
-  const orderSort = req.query._order;
+  const sortField = req.query._sort ? req.query._sort : 'id';
+  const orderSort = req.query._order ? req.query._order : 'asc';
 
   //const filter = { id, email, ip, isp };
 
