@@ -59,6 +59,66 @@ exports.findAll = (req, res) => {
     });
 };
 
+// Retrieve all Users from the database optimized for smart-tables in Angular Dashboard.
+exports.findAllPaginated = (req, res) => {
+  
+  const id = req.query.id_like;
+  const email = req.query.email_like;
+  const name = req.query.name_like;
+  const last_name = req.query.last_name_like;
+  const surname = req.query.surname_like;
+  const birthdate = req.query.birthdate_like;
+  const gender = req.query.gender_like;
+  const phone = req.query.phone_like;
+  const postal_code = req.query.postal_code_like;
+  const suburb = req.query.suburb_like;
+  const generation = req.query.generation_like;
+  const municipality = req.query.municipality_like;
+  const city = req.query.city_like;
+  const state = req.query.state_like;
+  const createdAt = req.query.createdAt_like;
+  const updatedAt = req.query.updatedAt_like;
+
+  const sortField = req.query._sort ? req.query._sort : 'id';
+  const orderSort = req.query._order ? req.query._order : 'asc';
+
+  let searchStr = {};
+
+  if(id) { searchStr.id = { [Op.like]: `%${id}%` } }
+  if(email) { searchStr.email = { [Op.like]: `%${email}%` } }
+  if(name) { searchStr.name = { [Op.like]: `%${name}%` } }
+  if(last_name) { searchStr.last_name = { [Op.like]: `%${last_name}%` } }
+  if(surname) { searchStr.surname = { [Op.like]: `%${surname}%` } }
+  if(birthdate) { searchStr.birthdate = { [Op.like]: `%${birthdate}%` } }
+  if(gender) { searchStr.gender = { [Op.like]: `%${gender}%` } }
+  if(phone) { searchStr.phone = { [Op.like]: `%${phone}%` } }
+  if(postal_code) { searchStr.postal_code = { [Op.like]: `%${postal_code}%` } }
+  if(suburb) { searchStr.suburb = { [Op.like]: `%${suburb}%` } }
+  if(generation) { searchStr.generation = { [Op.like]: `%${generation}%` } }
+  if(municipality) { searchStr.municipality = { [Op.like]: `%${municipality}%` } }
+  if(city) { searchStr.city = { [Op.like]: `%${city}%` } }
+  if(state) { searchStr.state = { [Op.like]: `%${state}%` } }
+  if(createdAt) { searchStr.createdAt = { [Op.like]: `%${createdAt}%` } }
+  if(updatedAt) { searchStr.updatedAt = { [Op.like]: `%${updatedAt}%` } }
+
+  const offset = req.query.offset ? (req.query.offset-1)*10 : null;
+  const limit = req.query.limit ? req.query.limit : null;
+
+  //Device.findAll({ offset: offset, limit: limit })
+  const { count, rows } = User.findAndCountAll({ where: searchStr, offset: offset, limit: limit, order:[ [ sortField, orderSort ] ] })
+    .then(rows => {
+      res.header('Access-Control-Expose-Headers', 'X-Total-Count');
+      res.header('X-Total-Count', count);
+      res.send(rows);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving paginated users."
+      });
+    });
+};
+
 // Find a single User with an id
 exports.findOne = (req, res) => {
   const userEmail = req.params.email;

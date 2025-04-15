@@ -92,13 +92,7 @@ exports.findAll = (req, res) => {
     });
 };
 
-const isQueryParam = async (param) => {
-  if(param && param != undefined && param != '') {
-    return true;
-  }
-  return false;
-}
-// Retrieve all Device from the database.
+// Retrieve all Device from the database optimized for smart-tables in Angular Dashboard.
 exports.findAllPaginated = (req, res) => {
   
   const id = req.query.id_like;
