@@ -84,22 +84,22 @@ exports.findAllPaginated = (req, res) => {
 
   let searchStr = {};
 
-  if(id) { searchStr.id = { [Op.like]: `%${id}%` } }
-  if(email) { searchStr.email = { [Op.like]: `%${email}%` } }
-  if(name) { searchStr.name = { [Op.like]: `%${name}%` } }
-  if(last_name) { searchStr.last_name = { [Op.like]: `%${last_name}%` } }
-  if(surname) { searchStr.surname = { [Op.like]: `%${surname}%` } }
-  if(birthdate) { searchStr.birthdate = { [Op.like]: `%${birthdate}%` } }
-  if(gender) { searchStr.gender = { [Op.like]: `%${gender}%` } }
-  if(phone) { searchStr.phone = { [Op.like]: `%${phone}%` } }
-  if(postal_code) { searchStr.postal_code = { [Op.like]: `%${postal_code}%` } }
-  if(suburb) { searchStr.suburb = { [Op.like]: `%${suburb}%` } }
-  if(generation) { searchStr.generation = { [Op.like]: `%${generation}%` } }
-  if(municipality) { searchStr.municipality = { [Op.like]: `%${municipality}%` } }
-  if(city) { searchStr.city = { [Op.like]: `%${city}%` } }
-  if(state) { searchStr.state = { [Op.like]: `%${state}%` } }
-  if(createdAt) { searchStr.createdAt = { [Op.like]: `%${createdAt}%` } }
-  if(updatedAt) { searchStr.updatedAt = { [Op.like]: `%${updatedAt}%` } }
+  if(id) { searchStr.id = { [Op.ilike]: `%${id}%` } }
+  if(email) { searchStr.email = { [Op.ilike]: `%${email}%` } }
+  if(name) { searchStr.name = { [Op.ilike]: `%${name}%` } }
+  if(last_name) { searchStr.last_name = { [Op.ilike]: `%${last_name}%` } }
+  if(surname) { searchStr.surname = { [Op.ilike]: `%${surname}%` } }
+  if(birthdate) { searchStr.birthdate = { [Op.ilike]: `%${birthdate}%` } }
+  if(gender) { searchStr.gender = { [Op.ilike]: `%${gender}%` } }
+  if(phone) { searchStr.phone = { [Op.ilike]: `%${phone}%` } }
+  if(postal_code) { searchStr.postal_code = { [Op.ilike]: `%${postal_code}%` } }
+  if(suburb) { searchStr.suburb = { [Op.ilike]: `%${suburb}%` } }
+  if(generation) { searchStr.generation = { [Op.ilike]: `%${generation}%` } }
+  if(municipality) { searchStr.municipality = { [Op.ilike]: `%${municipality}%` } }
+  if(city) { searchStr.city = { [Op.ilike]: `%${city}%` } }
+  if(state) { searchStr.state = { [Op.ilike]: `%${state}%` } }
+  if(createdAt) { searchStr.createdAt = { [Op.ilike]: `%${createdAt}%` } }
+  if(updatedAt) { searchStr.updatedAt = { [Op.ilike]: `%${updatedAt}%` } }
 
   const offset = req.query.offset ? (req.query.offset-1)*10 : null;
   const limit = req.query.limit ? req.query.limit : null;

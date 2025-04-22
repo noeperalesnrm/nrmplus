@@ -109,22 +109,22 @@ exports.findAllPaginated = (req, res) => {
 
   if(id) {
     searchStr.id = {
-     [Op.like]: `%${id}%`
+     [Op.ilike]: `%${id}%`
     }
   }
   if(email) {
     searchStr.email = {
-     [Op.like]: `%${email}%`
+     [Op.ilike]: `%${email}%`
     }
   }
   if(ip) {
     searchStr.ip = {
-     [Op.like]: `%${ip}%`
+     [Op.ilike]: `%${ip}%`
     }
   }
   if(isp) {
     searchStr.isp = {
-     [Op.like]: `%${isp}%`
+     [Op.ilike]: `%${isp}%`
     }
   }
 
