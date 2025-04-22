@@ -70,12 +70,12 @@ exports.findAllData = async (req, res) => {
     .then(data => {
   
       const resp = {
-        count: dataCount,
+        count: dataCount[0].count,
         rows: data
       };
   
       res.header('Access-Control-Expose-Headers', 'X-Total-Count');
-      res.header('X-Total-Count', dataCount);
+      res.header('X-Total-Count', dataCount[0].count);
       res.send(resp);
     })
     .catch(err => {
