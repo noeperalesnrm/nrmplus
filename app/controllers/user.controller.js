@@ -84,22 +84,22 @@ exports.findAllPaginated = (req, res) => {
 
   let searchStr = {};
 
-  if(id) { searchStr.id = { [Op.ilike]: `%${id}%` } }
-  if(email) { searchStr.email = { [Op.ilike]: `%${email}%` } }
-  if(name) { searchStr.name = { [Op.ilike]: `%${name}%` } }
-  if(last_name) { searchStr.last_name = { [Op.ilike]: `%${last_name}%` } }
-  if(surname) { searchStr.surname = { [Op.ilike]: `%${surname}%` } }
-  if(birthdate) { searchStr.birthdate = { [Op.ilike]: `%${birthdate}%` } }
-  if(gender) { searchStr.gender = { [Op.ilike]: `%${gender}%` } }
-  if(phone) { searchStr.phone = { [Op.ilike]: `%${phone}%` } }
-  if(postal_code) { searchStr.postal_code = { [Op.ilike]: `%${postal_code}%` } }
-  if(suburb) { searchStr.suburb = { [Op.ilike]: `%${suburb}%` } }
-  if(generation) { searchStr.generation = { [Op.ilike]: `%${generation}%` } }
-  if(municipality) { searchStr.municipality = { [Op.ilike]: `%${municipality}%` } }
-  if(city) { searchStr.city = { [Op.ilike]: `%${city}%` } }
-  if(state) { searchStr.state = { [Op.ilike]: `%${state}%` } }
-  if(createdAt) { searchStr.createdAt = { [Op.ilike]: `%${createdAt}%` } }
-  if(updatedAt) { searchStr.updatedAt = { [Op.ilike]: `%${updatedAt}%` } }
+  if(id) { searchStr.id = { [Op.iLike]: `%${id}%` } }
+  if(email) { searchStr.email = { [Op.iLike]: `%${email}%` } }
+  if(name) { searchStr.name = { [Op.iLike]: `%${name}%` } }
+  if(last_name) { searchStr.last_name = { [Op.iLike]: `%${last_name}%` } }
+  if(surname) { searchStr.surname = { [Op.iLike]: `%${surname}%` } }
+  if(birthdate) { searchStr.birthdate = { [Op.iLike]: `%${birthdate}%` } }
+  if(gender) { searchStr.gender = { [Op.iLike]: `%${gender}%` } }
+  if(phone) { searchStr.phone = { [Op.iLike]: `%${phone}%` } }
+  if(postal_code) { searchStr.postal_code = { [Op.iLike]: `%${postal_code}%` } }
+  if(suburb) { searchStr.suburb = { [Op.iLike]: `%${suburb}%` } }
+  if(generation) { searchStr.generation = { [Op.iLike]: `%${generation}%` } }
+  if(municipality) { searchStr.municipality = { [Op.iLike]: `%${municipality}%` } }
+  if(city) { searchStr.city = { [Op.iLike]: `%${city}%` } }
+  if(state) { searchStr.state = { [Op.iLike]: `%${state}%` } }
+  if(createdAt) { searchStr.createdAt = { [Op.iLike]: `%${createdAt}%` } }
+  if(updatedAt) { searchStr.updatedAt = { [Op.iLike]: `%${updatedAt}%` } }
 
   const offset = req.query.offset ? (req.query.offset-1)*10 : null;
   const limit = req.query.limit ? req.query.limit : null;
