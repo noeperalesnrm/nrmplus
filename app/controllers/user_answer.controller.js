@@ -67,7 +67,7 @@ exports.findAllData = async (req, res) => {
   .then(async dataCount => {
     let query = 'SELECT ua.id, a.text as "answer", u.email, u.name, u.last_name, u.surname, u.birthdate, u.gender, u.phone, u.postal_code, u.suburb, u.generation, u.municipality, u.city, u.state, d.ip, d.isp, d.country, d.screen_resolution, d.color_depth, d.lang, d.timezone, d.cpu_cores, d.device_memory, d.network_type, d.is_mobile, d.hardware_vendor, d.hardware_model, d.hardware_name, d.device_type, d.platform_vendor, d.platform_name, d.platform_version, d.browser_vendor, d.browser_name, d.browser_version, d.hardware_rank, d.is_tablet, d.screen_width_px, d.screen_height_px, d.has_touch_screen, d.has_camera, d.is_tv, d.is_smartphone, d.is_small_screen, d.has_nfc, d.hardware_family, d.oem, d.is_screen_foldable, d.platform_rank, d.has_geo_location, d.is_email_browser, d.is_emulating_device, d.is_crawler, d.is_ia, d.device_id, d."createdAt" FROM user_answer ua JOIN answer a ON a.form_id = ua.form_id AND a.question_id = ua.question_id AND a.id = ua.answer_id JOIN nrm_plus_user u ON u.id = ua.user_id JOIN device_data d ON d.id = (SELECT MAX(id) FROM device_data WHERE email = u.email) WHERE ua.form_id = :formId AND ua.question_id = :questId ';
     
-    if(req.query.id_like) { query += 'AND CAST(ua.id AS TEXT) LIKE "%${req.query.id_like}%" '; }
+    if(req.query.id_like) { query += "AND CAST(ua.id AS TEXT) LIKE '%"+req.query.id_like+"%' "; }
 
     query += '';
     query +=  'ORDER BY ua.user_id ASC LIMIT '+limit+' OFFSET '+offset;
