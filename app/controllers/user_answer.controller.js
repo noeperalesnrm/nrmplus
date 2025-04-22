@@ -63,19 +63,19 @@ exports.findAllData = async (req, res) => {
     replacements: { formId: formId, questId: questId }
   })
   .then(async dataCount => {
-    const users = await db.sequelize.query('SELECT a.text, u.email, u.name, u.last_name, u.surname FROM user_answer ua JOIN answer a ON a.form_id = ua.form_id AND a.question_id = ua.question_id AND a.id = ua.answer_id JOIN nrm_plus_user u ON u.id = ua.user_id JOIN device_data d ON d.id = (SELECT MAX(id) FROM device_data WHERE email = u.email) WHERE ua.form_id = :formId AND ua.question_id = :questId', {
+    const users = await db.sequelize.query('SELECT a.text, u.email, u.name, u.last_name, u.surname FROM user_answer ua JOIN answer a ON a.form_id = ua.form_id AND a.question_id = ua.question_id AND a.id = ua.answer_id JOIN nrm_plus_user u ON u.id = ua.user_id JOIN device_data d ON d.id = (SELECT MAX(id) FROM device_data WHERE email = u.email) WHERE ua.form_id = :formId AND ua.question_id = :questId ORDER BY ua.user_id ASC LIMIT 5 OFFSET 0', {
       type: db.Sequelize.QueryTypes.SELECT,
       replacements: { formId: formId, questId: questId }
     })
     .then(data => {
   
       const resp = {
-        count: dataCount,
+        count: dataCount.count,
         rows: data
       };
   
       res.header('Access-Control-Expose-Headers', 'X-Total-Count');
-      res.header('X-Total-Count', dataCount);
+      res.header('X-Total-Count', dataCount.count);
       res.send(resp);
     })
     .catch(err => {
