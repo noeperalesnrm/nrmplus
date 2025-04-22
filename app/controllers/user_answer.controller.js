@@ -62,7 +62,7 @@ exports.findAllData = async (req, res) => {
     type: db.Sequelize.QueryTypes.SELECT,
     replacements: { formId: formId, questId: questId }
   })
-  .success(data => {
+  .then(data => {
     res.send(data);
   })
   .catch(err => {
