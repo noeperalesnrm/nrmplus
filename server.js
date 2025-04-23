@@ -2,16 +2,7 @@ const express = require("express");
 // const bodyParser = require("body-parser"); /* deprecated */
 const cors = require("cors");
 
-var https = require('https');
-var http = require('http');
-var fs = require('fs');
-
 const app = express();
-
-var options = {
-  key: fs.readFileSync('/home/development_nrm/projects/nrmplus/selfsigned.key', 'utf8'),
-  cert: fs.readFileSync('/home/development_nrm/projects/nrmplus/selfsigned.crt', 'utf8')
-};
 
 var corsOptions = {
   origin: "*"
@@ -46,11 +37,7 @@ require("./app/routes/answer.routes")(app);
 require("./app/routes/user_answer.routes")(app);
 
 // set port, listen for requests
-/*const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
-*/
-
-//http.createServer(app).listen(80);
-https.createServer(options, app).listen(443);
