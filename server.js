@@ -9,8 +9,8 @@ var fs = require('fs');
 const app = express();
 
 var options = {
-  key: fs.readFileSync('/home/development_nrm/projects/nrmplus/client-key.pem'),
-  cert: fs.readFileSync('/home/development_nrm/projects/nrmplus/client-cert.pem')
+  key: fs.readFileSync('/home/development_nrm/projects/nrmplus/selfsigned.key', 'utf8'),
+  cert: fs.readFileSync('/home/development_nrm/projects/nrmplus/selfsigned.crt', 'utf8')
 };
 
 var corsOptions = {
@@ -52,5 +52,5 @@ app.listen(PORT, () => {
 });
 */
 
-//http.createServer(app).listen(80);
-https.createServer(options, app).listen(443);
+http.createServer(app).listen(8080);
+https.createServer(options, app).listen(8443);
