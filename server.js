@@ -1,10 +1,10 @@
 const express = require("express");
-// const bodyParser = require("body-parser"); /* deprecated */
 const cors = require("cors");
-
+const multer = require('multer');
 var https = require('https');
 var http = require('http');
 var fs = require('fs');
+const uploadController = require('./app/controllers/uploadController');
 
 const app = express();
 
@@ -24,6 +24,18 @@ app.use(express.json());  /* bodyParser.json() is deprecated */
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));   /* bodyParser.urlencoded() is deprecated */
+
+// Configuración para servir archivos estáticos
+app.use('/uploads', express.static('uploads'));
+
+// Rutas
+app.post('/upload', uploadController.uploadImage);
+
+// Manejo de errores
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Algo salió mal!');
+});
 
 const db = require("./app/models");
 db.sequelize.sync();
